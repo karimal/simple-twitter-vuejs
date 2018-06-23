@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css">
+        <title>Twitter in Vuejs</title>
+    </head>
+    <body>
+        <div id="twitter">
+            <header>
+                <div class="inner">
+                    <div class="headerSection">
+                        <router-link to="/home" class="link">Home</router-link>
+                    </div>
+                    <div class="headerSection">
+                        <img src="./images/twitter-icon.png" width="24" height="21">
+                    </div>
+                    <div class="headerSection">
+                        <input type="text" name="search" class="search" v-model="search" placeholder="Search..">
+                        <router-link to="/addTweet" class="tweetLink">Tweet</router-link>
+                    </div>
+                </div>
+            </header>
+
+            <router-view></router-view>
+        </div>
+
+
+        <script src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="//unpkg.com/vue-router/dist/vue-router.js"></script>
+        <script src="//unpkg.com/http-vue-loader"></script>
+
+        <script src="./store.js"></script>
+
+        <script>
+            const feed =  httpVueLoader('./feed.vue');
+            const addTweet =  httpVueLoader('./addTweet.vue');
+
+            const routes = [
+                { path: '/home', component: feed},
+                { path: '/addTweet', component: addTweet }
+            ]
+
+            const router = new VueRouter({
+                routes
+            });
+
+            new Vue({
+                router,
+                data: store.data,
+                methods: {
+                    addtweet() {
+                        this.feed.push(tweet);
+                    }
+                }
+            }).$mount('#twitter')
+        </script>
+    </body>
+</html>
